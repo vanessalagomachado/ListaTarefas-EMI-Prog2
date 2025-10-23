@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Sistema de Gerência de Tarefas</title>
+  <link rel="stylesheet" href="../css/estilo.css">
+</head>
+<body>
+  <!-- Cabeçalho -->
+  <header>
+    <img src="http://www2.pelotas.ifsul.edu.br/glaucius/images/marca-IFSul-horizontal-1.png" alt="Foto IFSUL">
+    <div>
+      <h1>Sistema de Gerência de Tarefas</h1>
+      <p>Implementado na aula de Programação 2<br>Profª Vanessa Lago Machado</p>
+    </div>
+  </header>
+
+  <!-- Área central -->
+  <div class="container">
+    <h2>Cadastrar Nova Tarefa</h2>
+    <form id="formTarefa">
+    Tipo de Tarefa
+    <select id="txtTipoTarefa" onchange="mostrarCamposEscolares()">
+      <option value="itemGenerica">Genérica</option>
+      <option value="itemEscolar">Escolar</option>
+    </select>
+
+    Nome da Tarefa
+    <input type="text" id="txtNome">
+
+    Descrição
+    <textarea id="txtDescricao"></textarea>
+
+    Data Prevista
+    <input type="date" id="txtDataPrevista">
+
+    <!-- Campos extras só para Tarefa Escolar -->
+    <div id="camposEscolares" style="display:none;">
+      Disciplina<br>
+      <p><select id="txtDisciplina"></select> <button id="btnCadastroDisciplina">+</button></p>
+      
+      <div class="esconder areaCadastroDisciplina">
+     
+        <p>Nome da Disciplina</p>
+        <input type="text" id="txtNomeDisciplina">
+
+        SIGLA da Disciplina
+        <input type="text" id="txtSiglaDisciplina">
+
+        <button id="btnSalvarDisciplina" type="button">Salvar Disciplina</button>
+      
+      </div>
+
+      Prazo de Entrega
+      <input type="date" id="txtDtPrazoEntrega">
+
+      Sistema de Entrega
+        <select id="selSistemaEntrega">
+            <option value="itemClassroom">Google Classroom</option>
+            <option value="itemMoodle">Moodle</option>
+            <option value="itemEmail">E-mail</option>
+            <option value="itemImpressa">Entrega Impressa</option>
+        </select>
+
+      Peso da Atividade
+      <input type="number" id="numPesoAtividade" min="0" max="10" step="0.1">
+
+    </div>
+
+    <button id="btnAddTarefa">Adicionar Tarefa</button>
+
+    </form>
+  </div>
+
+  <!-- Lista de tarefas -->
+<div class="container">
+  <h2>Tarefas Genéricas</h2>
+  <div id="listaTarefasGenericas">
+    <ul id="ulTarefasGenericas"></ul>
+  </div>
+</div>
+
+<div class="container">
+  <h2>Tarefas Escolares</h2>
+  <div id="listaTarefasEscolares">
+    <ul id="ulTarefasEscolares"></ul>
+  </div>
+</div>
+
+  <script>
+    function mostrarCamposEscolares() {
+      const tipo = document.getElementById("txtTipoTarefa").value;
+      document.getElementById("camposEscolares").style.display = 
+        tipo === "itemEscolar" ? "block" : "none";
+    }
+  </script>
+
+    <script src="../js/classes.js"></script>
+    <script src="../js/script2.js"></script>
+</body>
+</html>
