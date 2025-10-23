@@ -1,13 +1,21 @@
 // Array global para armazenar os objetos de tarefa
 let listaTarefas = [];
 
-let listaDisciplinas = [];
-let d1 = new Disciplina("Programação 2", "Prog2");
-let d2 = new Disciplina("Banco de Dados", "BD");
-let d3 = new Disciplina("Sistemas Operacionais", "SO");
-listaDisciplinas.push(d1);
-listaDisciplinas.push(d2);
-listaDisciplinas.push(d3);
+// Vanessa: erro da última aula: linha abaixo estava chamando localStorage.getItem("lista-disciplinas")
+let listaDisciplinas = JSON.parse(localStorage.getItem("lista-disciplina")) || [];
+
+if(listaDisciplinas.length > 0){
+    listaDisciplinas = listaDisciplinas.map(d => new Disciplina(d.nome, d.sigla));
+} else {
+    let d1 = new Disciplina("Programação 2", "Prog2");
+    let d2 = new Disciplina("Banco de Dados", "BD");
+    let d3 = new Disciplina("Sistemas Operacionais", "SO");
+    listaDisciplinas.push(d1);
+    listaDisciplinas.push(d2);
+    listaDisciplinas.push(d3);
+
+    localStorage.setItem("lista-disciplina", JSON.stringify(listaDisciplinas));
+}
 
 window.onload = function() {
     carregarDisciplinas();
@@ -144,4 +152,39 @@ function acaoConcluir(indice){
     listaTarefas[indice].concluirTarefa();
     // 3 ' recarregar as tarefas na página
     carregarTarefas();
+}
+
+
+document.getElementById("btnCadastroDisciplina").addEventListener("click", cadastroDisciplina);
+
+const areaDisciplina = document.querySelector(".areaCadastroDisciplina");
+
+function cadastroDisciplina(e){
+    e.preventDefault();
+    areaDisciplina.classList.toggle("esconder");
+}
+
+document.getElementById("btnSalvarDisciplina").addEventListener("click", novaDisciplina);
+
+function novaDisciplina(){
+    let nome = document.getElementById("txtNomeDisciplina").value;
+    let sigla = document.getElementById("txtSiglaDisciplina").value;
+    if(!nome || !sigla){
+        alert("Preencha todos os campos para cadastrar Disciplina");
+        return;
+    }
+
+    let obj_disciplina = new Disciplina(nome, sigla);
+
+    listaDisciplinas.push(obj_disciplina);
+
+    // adicionar dados no localStorage
+    localStorage.setItem("lista-disciplina", JSON.stringify(listaDisciplinas));
+
+
+    carregarDisciplinas();
+
+    document.getElementById("txtNomeDisciplina").value = "";
+    document.getElementById("txtSiglaDisciplina").value = "";
+    areaDisciplina.classList.toggle("esconder");
 }
