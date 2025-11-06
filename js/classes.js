@@ -47,6 +47,7 @@ class Tarefa {
     }
 }
 
+
 class TarefaEscolar extends Tarefa{
     constructor(nome, desc, data, disciplina, data_entrega, sistema, peso){
         super(nome, desc, data);
